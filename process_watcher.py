@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import sys
+import os
 import argparse
 from argparse import RawTextHelpFormatter
 import logging
@@ -146,7 +147,10 @@ try:
                         else:
                             template = '{executable} process {pid} ended'
                         
-                        comm.send(process=process, subject_format=template, **send_args)
+                        # comm.send(process=process, subject_format=template, **send_args)
+                        cmd = "echo \"" + args.tag[0] + "\" | mail -s \"Process ended: " + str(args.pid[0]) + " - " + args.tag[0] + "\" " + args.to[0]
+                        # print(cmd)
+                        os.system(cmd)
 
             except:
                 logging.exception('Exception encountered while checking or communicating about process {}'.format(pid))
